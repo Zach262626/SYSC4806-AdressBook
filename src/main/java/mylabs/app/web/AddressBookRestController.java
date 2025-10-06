@@ -22,6 +22,11 @@ public class AddressBookRestController {
         this.buddies = buddies;
     }
 
+    @GetMapping
+    public List<AddressBook> list() {
+        return books.findAll();
+    }
+
     @PostMapping
     public ResponseEntity<AddressBook> create(@RequestBody AddressBook incoming) {
         AddressBook saved = books.save(new AddressBook(incoming.getName()));
