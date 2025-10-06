@@ -15,7 +15,8 @@
 <h1>AddressBooks</h1>
 <ul>
     <li th:each="book : ${addressBooks}">
-        <a th:href="@{'/addressbooks/' + ${book.id} + '/view'}" th:text="${book.name}">Book Name</a>
+        <a th:href="@{'/addressbooks/' + ${book.id} + '/view'}"
+           th:text="${book.name}">Book Name</a>
     </li>
 </ul>
 

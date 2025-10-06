@@ -33,10 +33,6 @@ public class AddressBookRestController {
         return books.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
-    public List<AddressBook> list() {
-        return books.findAll();
-    }
 
     @PostMapping("/{id}/buddies")
     public ResponseEntity<AddressBook> addBuddy(@PathVariable Long id, @RequestBody BuddyInfo incoming) {
