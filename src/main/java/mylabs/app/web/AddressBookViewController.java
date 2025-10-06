@@ -1,0 +1,24 @@
+package mylabs.app.web;
+
+import mylabs.app.AddressBookRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/addressbooks")
+public class AddressBookViewController {
+
+    private final AddressBookRepository books;
+
+    public AddressBookViewController(AddressBookRepository books) {
+        this.books = books;
+    }
+
+    // Example: http://localhost:8080/addressbooks/1/view
+    @GetMapping("/{id}/view")
+    public String view(@PathVariable Long id, Model model) {
+        model.addAttribute("book", books.findById(id).orElse(null));
+        return "addressbook";
+    }
+}

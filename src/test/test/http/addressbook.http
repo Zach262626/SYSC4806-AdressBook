@@ -1,0 +1,28 @@
+### Create a new AddressBook
+POST http://localhost:8080/api/addressbooks
+Content-Type: application/json
+
+{
+  "name": "Personal"
+}
+### List all AddressBooks
+GET http://localhost:8080/api/addressbooks
+
+### Get a specific AddressBook
+GET http://localhost:8080/api/addressbooks/1
+
+### Add a Buddy to an AddressBook
+POST http://localhost:8080/api/addressbooks/1/buddies
+Content-Type: application/json
+
+{
+  "name": "Zach",
+  "address": "50 ave Blue, Campbellton, NB",
+  "phone": 5069874000
+}
+
+### Remove  Buddy (replace {buddyId} with the actual buddy’s id)
+DELETE http://localhost:8080/api/addressbooks/1/buddies/2
+
+### View the AddressBook in Thymeleaf page
+GET http://localhost:8080/addressbooks/1/view
