@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/addressbooks")
+@RequestMapping("/")
 public class AddressBookViewController {
 
     private final AddressBookRepository books;
@@ -17,19 +17,22 @@ public class AddressBookViewController {
     }
 
     @GetMapping("/")
-    public String root() {
+    public String home(Model model) {
+        model.addAttribute("book", books.findAll());
+        return "home";
+    }
+    @PostMapping("/addressbooks")
+    public String createAddressBookFromForm(String name) {
+        books.save(new AddressBook(name));
         return "redirect:/addressbooks";
     }
 
-    @GetMapping("/addressbooks")
-    public String home(Model model) {
-        model.addAttribute("addressBooks", books.findAll());
-        return "home"; // Thymeleaf template
-    }
-
-    @GetMapping("/addressbooks/{id}/view")
+    // Example: http://localhost:8080/addressbooks/1/view
+    @GetMapping("addressbooks/{id}/view")
     public String view(@PathVariable Long id, Model model) {
         model.addAttribute("book", books.findById(id).orElse(null));
         return "addressbook";
     }
 }
+
+

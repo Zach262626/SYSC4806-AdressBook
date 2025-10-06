@@ -12,18 +12,33 @@
     </style>
 </head>
 <body>
+<div th:if="${book != null}">
 <h1>AddressBooks</h1>
 <ul>
-    <li th:each="book : ${addressBooks}">
-        <a th:href="@{'/addressbooks/' + ${book.id} + '/view'}"
-           th:text="${book.name}">Book Name</a>
+    <li th:each="addressBooks : ${book}">
+        <a th:href="@{'/addressbooks/' + ${addressBooks.id} + '/view'}"
+           th:text="${addressBooks.name}">Book Name</a>
     </li>
 </ul>
+</div>
 
 <h2>Add New AddressBook</h2>
-<form th:action="@{/api/addressbooks}" method="post">
+<form id="addBookForm">
     <input type="text" name="name" placeholder="Name" required>
     <button type="submit">Add</button>
 </form>
 </body>
+<script>
+    document.getElementById('addBookForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = this.name.value;
+
+        fetch('/api/addressbooks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name })
+        }).then(() => window.location.reload());
+    });
+</script>
 </html>
+
