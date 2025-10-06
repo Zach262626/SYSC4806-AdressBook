@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AddressBook Home</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 0.5em 0; }
+        a { text-decoration: none; color: #2a7ae2; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<h1>AddressBooks</h1>
+<ul>
+    <li th:each="book : ${addressBooks}">
+        <a th:href="@{'/addressbooks/' + ${book.id} + '/view'}" th:text="${book.name}">Book Name</a>
+    </li>
+</ul>
+
+<h2>Add New AddressBook</h2>
+<form th:action="@{/api/addressbooks}" method="post">
+    <input type="text" name="name" placeholder="Name" required>
+    <button type="submit">Add</button>
+</form>
+</body>
+</html>
