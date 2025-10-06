@@ -17,13 +17,17 @@ public class AddressBookViewController {
     }
 
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("addressBooks", books.findAll());
-        return "home";
+    public String root() {
+        return "redirect:/addressbooks";
     }
 
-    // Example: http://localhost:8080/addressbooks/1/view
-    @GetMapping("/{id}/view")
+    @GetMapping("/addressbooks")
+    public String home(Model model) {
+        model.addAttribute("addressBooks", books.findAll());
+        return "home"; // Thymeleaf template
+    }
+
+    @GetMapping("/addressbooks/{id}/view")
     public String view(@PathVariable Long id, Model model) {
         model.addAttribute("book", books.findById(id).orElse(null));
         return "addressbook";
