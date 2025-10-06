@@ -16,7 +16,7 @@ public class AddressBookViewController {
         this.books = books;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("addressBooks", books.findAll());
         return "home";
@@ -28,11 +28,4 @@ public class AddressBookViewController {
         model.addAttribute("book", books.findById(id).orElse(null));
         return "addressbook";
     }
-
-    @PostMapping
-    public String create(String name) {
-        books.save(new AddressBook(name));
-        return "redirect:/addressbooks";
-    }
-
 }
