@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8"/>
     <title>AddressBook Home</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 2em; }
@@ -12,22 +13,21 @@
     </style>
 </head>
 <body>
-<div th:if="${book != null}">
 <h1>AddressBooks</h1>
+
 <ul>
-    <li th:each="addressBooks : ${book}">
-        <a th:href="@{'/addressbooks/' + ${addressBooks.id} + '/view'}"
-           th:text="${addressBooks.name}">Book Name</a>
+    <li th:each="ab : ${books}">
+        <a th:href="@{'/addressbooks/' + ${ab.id} + '/view'}"
+           th:text="${ab.name}">Book Name</a>
     </li>
 </ul>
-</div>
 
 <h2>Add New AddressBook</h2>
-<form id="addBookForm">
+<form id="addBookForm" th:action="@{/addressbooks}" method="post">
     <input type="text" name="name" placeholder="Name" required>
     <button type="submit">Add</button>
 </form>
-</body>
+
 <script>
     document.getElementById('addBookForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -40,5 +40,5 @@
         }).then(() => window.location.reload());
     });
 </script>
+</body>
 </html>
-
