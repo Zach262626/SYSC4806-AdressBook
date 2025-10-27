@@ -1,6 +1,5 @@
 package mylabs.app;
 
-import mylabs.app.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,7 +33,7 @@ class AddressBookRestControllerTest {
         return book;
     }
 
-    private BuddyInfo makeBuddy(String name, String address, long phone, long id) {
+    private BuddyInfo makeBuddy(String name, String address, String phone, long id) {
         BuddyInfo buddy = new BuddyInfo(name, address, phone);
         buddy.setId(id);
         return buddy;
@@ -91,7 +90,7 @@ class AddressBookRestControllerTest {
         when(books.findById(1L)).thenReturn(Optional.of(book));
         when(books.save(any(AddressBook.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        String json = "{\"name\":\"Buddy1\",\"address\":\"123 Street\",\"phone\":5555555}";
+        String json = "{\"name\":\"Buddy1\",\"address\":\"123 Street\",\"phone\":\"5555555\"}";
 
         mockMvc.perform(post("/api/addressbooks/1/buddies")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -100,13 +99,13 @@ class AddressBookRestControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.buddies[0].name").value("Buddy1"))
                 .andExpect(jsonPath("$.buddies[0].address").value("123 Street"))
-                .andExpect(jsonPath("$.buddies[0].phone").value(5555555));
+                .andExpect(jsonPath("$.buddies[0].phone").value("5555555"));
     }
 
     @Test
     void removeBuddy() throws Exception {
         AddressBook book = makeBook("MyBook", 1L);
-        BuddyInfo buddy = makeBuddy("Buddy1", "123 Street", 5555555L, 1L);
+        BuddyInfo buddy = makeBuddy("Buddy1", "123 Street", "5555555", 1L);
         book.addBuddy(buddy);
 
         when(books.findById(1L)).thenReturn(Optional.of(book));
