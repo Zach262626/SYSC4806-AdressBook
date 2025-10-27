@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"/><title>Address Books</title></head>
+<body>
+<h1>Address Books</h1>
+
+<ul>
+    <li th:each="b : ${books}">
+        <a th:href="@{/addressbooks/{id}(id=${b.id})}" th:text="${b.name}">Book</a>
+    </li>
+</ul>
+
+<h2>Create one</h2>
+<form action="#" th:action="@{/addressbooks}" method="post">
+    <input type="text" name="name" placeholder="Book name" required/>
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>
