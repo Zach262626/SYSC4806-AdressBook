@@ -1,0 +1,95 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title th:text="${book.name}">Book</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<a th:href="@{/}">Home</a>
+<h1 th:text="${book.name}">Book</h1>
+<p>ID:<span th:text="${book.id}">0</span></p>
+
+<h3>Buddies</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody id="buddies">
+        <tr th:each="bd : ${book.buddies}">
+            <td th:text="${bd.name}">name</td>
+            <td th:text="${bd.address}">addr</td>
+            <td th:text="${bd.phone}">phone</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Add Buddy</h3>
+
+<form id="BuddyInfoForm" th:action="@{/addressbooks/{id}/buddies(id=${book.id})}" method="post">
+    <input type="text" name="name" placeholder="Name" required/><br/>
+    <input type="text" name="address" placeholder="Address" required/><br/>
+    <input type="text" name="phone" placeholder="Phone" required/><br/>
+    <button type="submit">Add (form)</button>
+</form>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+
+        var bookId = /*[[${book.id}]]*/;
+
+        $('#BuddyInfoForm').on('submit', function(e) {
+            e.preventDefault();
+
+            var name = this.name.value;
+            var phone = this.phone.value;
+            var address = this.address.value;
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/addressbooks/' + bookId + '/buddies',
+                contentType: 'application/json',
+                data: JSON.stringify({ name: name, phone: phone, address: address }),
+                success: function() {
+                    fetchBookData();
+                    $('#BuddyInfoForm')[0].reset();
+                    console.log("Buddy added")
+                },
+                error: function() {
+                    alert('Error adding DuddyInfo');
+                }
+            });
+        });
+
+        function fetchBookData() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/addressbooks/' + bookId,
+                dataType: 'json',
+                success: function(book) {
+                    var tbody = $('#buddies');
+                    tbody.empty();
+
+                    var buddies = book.buddies || [];
+                    $.each(buddies, function(i, buddy) {
+                        var row = $('<tr>')
+                            .append($('<td>').text(buddy.name || ''))
+                            .append($('<td>').text(buddy.address || ''))
+                            .append($('<td>').text(buddy.phone || ''));
+                        tbody.append(row);
+                    });
+                    console.log("Buddy displayed")
+                },
+                error: function() {
+                    alert('Error Fetching Data');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

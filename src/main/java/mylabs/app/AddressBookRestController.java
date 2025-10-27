@@ -1,9 +1,5 @@
-package mylabs.app.web;
+package mylabs.app;
 
-import mylabs.app.AddressBook;
-import mylabs.app.BuddyInfo;
-import mylabs.app.AddressBookRepository;
-import mylabs.app.BuddyInfoRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

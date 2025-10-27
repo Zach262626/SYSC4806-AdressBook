@@ -1,9 +1,6 @@
 package mylabs.app.web;
 
-import mylabs.app.AddressBook;
-import mylabs.app.BuddyInfo;
-import mylabs.app.AddressBookRepository;
-import mylabs.app.BuddyInfoRepository;
+import mylabs.app.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,7 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
