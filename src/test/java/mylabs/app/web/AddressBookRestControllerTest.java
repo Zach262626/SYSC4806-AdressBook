@@ -1,4 +1,4 @@
-package mylabs.app.web;
+package mylabs.app;
 
 import mylabs.app.*;
 import org.junit.jupiter.api.Test;
